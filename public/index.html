@@ -20,7 +20,7 @@
     </div>
     <div class="header-actions">
       <button class="btn btn-ghost btn-small" id="curatorAddFilmBtn" style="display:none;">＋ Add film</button>
-      <button class="btn btn-ghost" id="loginBtn">Curator</button>
+      <button class="btn btn-ghost lightbox-trigger"  id="loginBtn" data-target="loginOverlay">Curator</button>
     </div>
   </div>
 </header>
@@ -49,27 +49,17 @@
   </div>
 </div>
 
-<div class="overlay" id="detailOverlay">
-  <div class="lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="detailClose" aria-label="Close">✕</button>
-    <div class="detail-layout" id="detailContent"></div>
-  </div>
-</div>
-
 <!-- Login lightbox -->
-<div class="lightbox-overlay" id="loginOverlay">
+ <div class="lightbox-overlay" id="loginOverlay">
   <div class="lightbox-box">
-    <button class="lightbox-close" id="loginClose" aria-label="Close">✕</button>
-
-    <div id="auth-container">
+    <button class="lightbox-close" data-target="loginOverlay" aria-label="Close">✕</button>
+   <div id="auth-container">
       <h2>Register</h2>
       <input type="text" id="username" placeholder="Username">
       <input type="email" id="email" placeholder="Email">
       <input type="password" id="password" placeholder="Password">
       <button onclick="register()">Register</button>
-
       <hr>
-
       <h2>Login</h2>
       <input type="email" id="login-email" placeholder="Email">
       <input type="password" id="login-password" placeholder="Password">
@@ -78,10 +68,12 @@
   </div>
 </div>
 
+
+
 <!-- Category manager lightbox -->
-<div class="overlay" id="categoryOverlay">
-  <div class="lightbox lightbox-small" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="categoryClose" aria-label="Close">✕</button>
+ <div class="lightbox-overlay" id="categoryOverlay">
+  <div class="lightbox-box">
+    <button class="lightbox-close" id="categoryClose" data-target="categoryOverlay" aria-label="Close">✕</button>
     <div class="lightbox-inner">
       <h2>Manage categories</h2>
       <div id="categoryList"></div>
@@ -93,9 +85,9 @@
 </div>
 
 <!-- Category edit lightbox -->
-<div class="overlay" id="categoryEditOverlay">
-  <div class="lightbox lightbox-small" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="categoryEditClose" aria-label="Close">✕</button>
+ <div class="lightbox-overlay" id="categoryEditOverlay">
+  <div class="lightbox-box">
+    <button class="lightbox-close" id="categoryEditClose" data-target="categoryEditOverlay" aria-label="Close">✕</button>
     <div class="lightbox-inner">
       <h2 id="categoryEditTitle">Add category</h2>
       <form id="categoryEditForm">
@@ -134,9 +126,9 @@
 </div>
 
 <!-- Film edit lightbox -->
-<div class="overlay" id="filmOverlay">
-  <div class="lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="filmClose" aria-label="Close">✕</button>
+ <div class="lightbox-overlay" id="filmOverlay">
+  <div class="lightbox-box">
+    <button class="lightbox-close" id="filmClose" data-target="filmOverlay" aria-label="Close">✕</button>
     <div class="lightbox-inner">
       <h2 id="filmEditTitle">Add film</h2>
       <form id="filmEditForm">

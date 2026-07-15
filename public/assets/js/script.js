@@ -107,9 +107,14 @@ function createPost() {
 }
 
 
-document.getElementById("loginBtn").addEventListener("click", () => {
-document.getElementById("loginOverlay").classList.add("is-open");
+document.querySelectorAll(".lightbox-trigger").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.getElementById(btn.dataset.target).classList.add("is-open");
+    });
   });
-document.getElementById("loginClose").addEventListener("click", () => {
-document.getElementById("loginOverlay").classList.remove("is-open");
+
+document.querySelectorAll(".lightbox-close").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.getElementById(btn.dataset.target).classList.remove("is-open");
+    });
   });
