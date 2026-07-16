@@ -12,6 +12,7 @@
 <body>
 
 <div class="sprockets"></div>
+
 <header class="site-header">
   <div class="header-inner">
     <div class="brand">
@@ -19,7 +20,7 @@
       <p class="tag">Free film screenings · The Park Tavern, Macclesfield</p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-ghost btn-small" id="curatorAddFilmBtn" style="display:none;">＋ Add film</button>
+      <button class="btn btn-ghost btn-small hidden" id="curatorAddFilmBtn" data-target="filmOverlay">＋ Add film</button>
       <button class="btn btn-ghost lightbox-trigger"  id="loginBtn" data-target="loginOverlay">Curator</button>
     </div>
   </div>
@@ -44,7 +45,7 @@
 <!-- Detail lightbox -->
  <div class="lightbox-overlay" id="detailOverlay">
   <div class="lightbox-box">
-    <button class="lightbox-close" id="detailClose" aria-label="Close">✕</button>
+    <button class="lightbox-close" id="detailClose" data-target="detailOverlay" aria-label="Close">✕</button>
       <div class="detail-layout" id="detailContent"></div>
   </div>
 </div>
@@ -53,18 +54,29 @@
  <div class="lightbox-overlay" id="loginOverlay">
   <div class="lightbox-box">
     <button class="lightbox-close" data-target="loginOverlay" aria-label="Close">✕</button>
-   <div id="auth-container">
+    <h2>Curator login</h2>
+      <p style="color:var(--ink-soft); font-size:0.9rem; margin-top:-8px;">Enter the curator password to add, edit or remove listings.</p>
+   
+      <div id="auth-container">
       <h2>Register</h2>
-      <input type="text" id="username" placeholder="Username">
-      <input type="email" id="email" placeholder="Email">
-      <input type="password" id="password" placeholder="Password">
-      <button onclick="register()">Register</button>
+      <form id="registerForm" onsubmit="register(event)">
+        <input type="text" id="username" placeholder="Username">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button type="submit">Register</button>
+      </form>
+
       <hr>
+
       <h2>Login</h2>
-      <input type="email" id="login-email" placeholder="Email">
-      <input type="password" id="login-password" placeholder="Password">
-      <button onclick="login()">Login</button>
+      <form id="loginForm" onsubmit="login(event)">
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-password" placeholder="Password">
+        <button type="submit">Login</button>
+      </form>
     </div>
+
+   
   </div>
 </div>
 
@@ -78,7 +90,7 @@
       <h2>Manage categories</h2>
       <div id="categoryList"></div>
       <div class="form-actions" style="justify-content:flex-start; margin-top:18px;">
-        <button class="btn btn-teal btn-small" id="addCategoryBtn">＋ Add category</button>
+        <button class="btn btn-teal btn-small" id="addCategoryBtn" onclick="fetchCategories()">＋ Add category</button>
       </div>
     </div>
   </div>
@@ -118,7 +130,7 @@
           <button type="button" class="btn btn-crimson btn-small" id="catDeleteBtn" style="display:none;">Delete category</button>
           <span style="flex:1 1 auto;"></span>
           <button type="button" class="btn btn-small" id="catCancelBtn">Cancel</button>
-          <button type="submit" class="btn btn-teal btn-small">Save category</button>
+          <button type="submit" class="btn btn-teal btn-small" onclick="createCategory()">Save category</button>
         </div>
       </form>
     </div>
@@ -177,18 +189,18 @@
         </div>
         <p class="form-error" id="filmEditError"></p>
         <div class="form-actions">
-          <button type="button" class="btn btn-crimson btn-small" id="filmDeleteBtn" style="display:none;">Delete film</button>
+          <button type="button" class="btn btn-crimson btn-small" id="filmDeleteBtn" style="display:none;" onclick="deletePost()">Delete film</button>
           <span style="flex:1 1 auto;"></span>
           <button type="button" class="btn btn-small" id="filmCancelBtn">Cancel</button>
-          <button type="submit" class="btn btn-teal btn-small">Save film</button>
+          <button type="submit" class="btn btn-teal btn-small" onclick="createPost()">Save film</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<div id="toast"></div>
 
 <script src="assets/js/script.js"></script>
+<script src="assets/js/ui.js"></script>
 </body>
 </html>

@@ -67,6 +67,52 @@ function logout() {
   });
 }
 
+// =================================
+// PULLS CATEGORIES FROM THE BACKEND
+// =================================
+
+function fetchCategories() {
+  fetch("http://localhost:3001/api/categories", {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then((res) => res.json())
+    .then((categories) => {
+      const categoriesContainer = document.getElementById("categoryList");
+      categoriesContainer.innerHTML = "";
+      categories.forEach((category) => {
+        const div = document.createElement("div");
+        div.innerHTML = `<h3>${category.name}</h3><p>${category.description}</p><small>Color: ${category.color}</small>`;
+        categoriesContainer.appendChild(div);
+      });
+    });
+}
+function createCategory() {
+  const name = document.getElementById("catName").value;
+  const color = document.getElementById("catColor").value;
+  const schedule = document.getElementById("catSchedule").value;
+  const programmer = document.getElementById("catProgrammer").value;
+  const description = document.getElementById("catDescription").value;
+  
+  fetch("http://localhost:3001/api/categories", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, color, schedule, programmer, description }),
+  })
+    .then((res) => res.json())
+    .then(() => {
+      alert("Category saved successfully");
+      fetchPosts();
+    });
+}
+
+// =================================
+// PULLS FILMS FROM THE BACKEND
+// =================================
+
 function fetchPosts() {
   fetch("http://localhost:3001/api/posts", {
     method: "GET",
@@ -89,10 +135,39 @@ function fetchPosts() {
 }
 
 function createPost() {
-  const title = document.getElementById("post-title").value;
-  const content = document.getElementById("post-content").value;
+  const title = document.getElementById("filmTitle").value;
+  const categoryId = document.getElementById("filmCategory").value;
+  const date = document.getElementById("filmDate").value;
+  const cert = document.getElementById("filmCert").value;
+  const genre = document.getElementById("filmGenre").value;
+  const runtime = document.getElementById("filmRuntime").value;
+  const country = document.getElementById("filmCountry").value;
+  const year = document.getElementById("filmYear").value;
+  const image = document.getElementById("filmImage").value;
+  const hint = document.getElementById("filmHint").value;
+  const synopsis = document.getElementById("filmSynopsis").value;
+
   fetch("http://localhost:3001/api/posts", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ title, categoryId, date, cert, genre, runtime, country, year, image, hint, synopsis, postedBy: "User" }),
+  })
+    .then((res) => res.json())
+    .then(() => {
+      alert("Post created successfully");
+      fetchPosts();
+    });
+}
+
+function deletePost() {
+  const title = document.getElementById("filmTitle").value;
+  const content = document.getElementById("filmSynopsis").value;
+
+  fetch("http://localhost:3001/api/films", {
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -101,44 +176,7 @@ function createPost() {
   })
     .then((res) => res.json())
     .then(() => {
-      alert("Post created successfully");
-      fetchPosts();
-    });
-}
-function fetchCategories() {
-  fetch("http://localhost:3001/api/categories", {
-    method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
-  })
-    .then((res) => res.json())
-    .then((categories) => {
-      const categoriesContainer = document.getElementById("categoryList");
-      categoriesContainer.innerHTML = "";
-      categories.forEach((category) => {
-        const div = document.createElement("div");
-        div.innerHTML = `<h3>${category.name}</h3><p>${category.description}</p><small>Color: ${category.color}</small>`;
-        categoriesContainer.appendChild(div);
-      });
-    });
-}
-function categoryEditForm() {
-  const name = document.getElementById("catName").value;
-  const color = document.getElementById("catColor").value;
-  const schedule = document.getElementById("catSchedule").value;
-  const programmer = document.getElementById("catProgrammer").value;
-  const description = document.getElementById("catDescription").value;
-  
-  fetch("http://localhost:3001/api/categories", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ name, color, schedule, programmer, description }),
-  })
-    .then((res) => res.json())
-    .then(() => {
-      alert("Category saved successfully");
+      alert("Film deleted successfully");
       fetchPosts();
     });
 }
