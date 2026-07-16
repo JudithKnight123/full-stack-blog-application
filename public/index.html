@@ -129,7 +129,7 @@
         <div class="form-actions">
           <button type="button" class="btn btn-crimson btn-small" id="catDeleteBtn" style="display:none;">Delete category</button>
           <span style="flex:1 1 auto;"></span>
-          <button type="button" class="btn btn-small" id="catCancelBtn">Cancel</button>
+          <button type="button" class="btn btn-small lightbox-cancel" id="catCancelBtn" data-target="categoryEditOverlay">Cancel</button>
           <button type="submit" class="btn btn-teal btn-small" onclick="createCategory()">Save category</button>
         </div>
       </form>
@@ -191,7 +191,7 @@
         <div class="form-actions">
           <button type="button" class="btn btn-crimson btn-small" id="filmDeleteBtn" style="display:none;" onclick="deletePost()">Delete film</button>
           <span style="flex:1 1 auto;"></span>
-          <button type="button" class="btn btn-small" id="filmCancelBtn">Cancel</button>
+          <button type="button" class="btn btn-small lightbox-cancel" id="filmCancelBtn" data-target="filmOverlay">Cancel</button>
           <button type="submit" class="btn btn-teal btn-small" onclick="createPost()">Save film</button>
         </div>
       </form>
