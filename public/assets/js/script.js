@@ -1,6 +1,7 @@
 let token = localStorage.getItem("authToken");
 
-function register() {
+function register(event) {
+  event.preventDefault();
   const username = document.getElementById("username").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -22,7 +23,8 @@ function register() {
     });
 }
 
-function login() {
+function login(event) { 
+  event.preventDefault();
   const email = document.getElementById("login-email").value;
   const password = document.getElementById("login-password").value;
   fetch("http://localhost:3001/api/users/login", {
@@ -43,8 +45,10 @@ function login() {
         fetchPosts();
 
         // Hide the auth container and show the app container as we're now logged in
-        document.getElementById("auth-container").classList.add("hidden");
-        document.getElementById("app-container").classList.remove("hidden");
+        document.getElementById("loginBtn").classList.add("hidden");
+        document.getElementById("curatorAddFilmBtn").classList.remove("hidden");
+        document.getElementById("logoutBtn").classList.remove("hidden");
+        document.getElementById("loginOverlay").classList.remove("is-open");
       } else {
         alert(data.message);
       }
@@ -62,8 +66,7 @@ function logout() {
     // Clear the token from the local storage as we're now logged out
     localStorage.removeItem("authToken");
     token = null;
-    document.getElementById("auth-container").classList.remove("hidden");
-    document.getElementById("app-container").classList.add("hidden");
+    window.location.reload();
   });
 }
 

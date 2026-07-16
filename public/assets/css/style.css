@@ -17,6 +17,7 @@
     --font-mono:'IBM Plex Mono', monospace;
     --shadow: 0 6px 18px rgba(34,37,30,0.16);
   }
+  .hidden { display: none; }
 
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
