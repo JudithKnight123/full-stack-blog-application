@@ -91,6 +91,7 @@ function fetchCategories() {
     });
 }
 function createCategory() {
+    
   const name = document.getElementById("catName").value;
   const color = document.getElementById("catColor").value;
   const schedule = document.getElementById("catSchedule").value;
@@ -138,6 +139,12 @@ function fetchPosts() {
 }
 
 function createPost() {
+
+  //Call the update function if we are editing a film
+   if (editingFilmId) {
+    updatePost();
+    return;
+  }
   const title = document.getElementById("filmTitle").value;
   const categoryId = document.getElementById("filmCategory").value;
   const date = document.getElementById("filmDate").value;
@@ -177,8 +184,8 @@ function updatePost() {
   const hint = document.getElementById("filmHint").value;
   const synopsis = document.getElementById("filmSynopsis").value;
 
-  fetch("http://localhost:3001/api/posts", {
-    method: "POST",
+  fetch("http://localhost:3001/api/posts/" + editingFilmId, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -191,11 +198,11 @@ function updatePost() {
       fetchPosts();
     });
 }
-function deletePost() {
+function deleteFilm() {
   const title = document.getElementById("filmTitle").value;
   const content = document.getElementById("filmSynopsis").value;
 
-  fetch("http://localhost:3001/api/films", {
+  fetch("http://localhost:3001/api/posts/" + editingFilmId, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -209,3 +216,6 @@ function deletePost() {
       fetchPosts();
     });
 }
+
+fetchCategories();
+fetchPosts();
