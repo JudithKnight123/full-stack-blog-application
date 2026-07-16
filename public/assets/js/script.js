@@ -80,14 +80,9 @@ function fetchCategories() {
     headers: { Authorization: `Bearer ${token}` },
   })
     .then((res) => res.json())
-    .then((categories) => {
-      const categoriesContainer = document.getElementById("categoryList");
-      categoriesContainer.innerHTML = "";
-      categories.forEach((category) => {
-        const div = document.createElement("div");
-        div.innerHTML = `<h3>${category.name}</h3><p>${category.description}</p><small>Color: ${category.color}</small>`;
-        categoriesContainer.appendChild(div);
-      });
+   .then((categories) => {
+      window.categories = categories;
+      renderAll();
     });
 }
 function createCategory() {
@@ -124,17 +119,8 @@ function fetchPosts() {
   })
     .then((res) => res.json())
     .then((posts) => {
-      const postsContainer = document.getElementById("grid");
-      postsContainer.innerHTML = "";
-      posts.forEach((post) => {
-        const div = document.createElement("div");
-        div.innerHTML = `<h3>${post.title}</h3><p>${
-          post.content
-        }</p><small>By: ${post.postedBy} on ${new Date(
-          post.createdOn
-        ).toLocaleString()}</small>`;
-        postsContainer.appendChild(div);
-      });
+      films = posts;
+      renderAll();
     });
 }
 
