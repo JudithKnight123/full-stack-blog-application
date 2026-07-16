@@ -105,16 +105,40 @@ function createPost() {
       fetchPosts();
     });
 }
-
-
-document.querySelectorAll(".lightbox-trigger").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.getElementById(btn.dataset.target).classList.add("is-open");
+function fetchCategories() {
+  fetch("http://localhost:3001/api/categories", {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then((res) => res.json())
+    .then((categories) => {
+      const categoriesContainer = document.getElementById("categoryList");
+      categoriesContainer.innerHTML = "";
+      categories.forEach((category) => {
+        const div = document.createElement("div");
+        div.innerHTML = `<h3>${category.name}</h3><p>${category.description}</p><small>Color: ${category.color}</small>`;
+        categoriesContainer.appendChild(div);
+      });
     });
-  });
-
-document.querySelectorAll(".lightbox-close").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.getElementById(btn.dataset.target).classList.remove("is-open");
+}
+function categoryEditForm() {
+  const name = document.getElementById("catName").value;
+  const color = document.getElementById("catColor").value;
+  const schedule = document.getElementById("catSchedule").value;
+  const programmer = document.getElementById("catProgrammer").value;
+  const description = document.getElementById("catDescription").value;
+  
+  fetch("http://localhost:3001/api/categories", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, color, schedule, programmer, description }),
+  })
+    .then((res) => res.json())
+    .then(() => {
+      alert("Category saved successfully");
+      fetchPosts();
     });
-  });
+}
