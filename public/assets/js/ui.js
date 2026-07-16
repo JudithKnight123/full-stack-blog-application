@@ -32,7 +32,7 @@ document.querySelectorAll(".lightbox-trigger").forEach(btn => {
     document.getElementById(btn.dataset.target).classList.add("is-open");
   });
 });
-document.querySelectorAll(".lightbox-close").forEach(btn => {
+document.querySelectorAll(".lightbox-close, .lightbox-cancel").forEach(btn => {
   btn.addEventListener("click", () => {
     document.getElementById(btn.dataset.target).classList.remove("is-open");
   });
