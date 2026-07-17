@@ -107,22 +107,45 @@ function fetchCategories() {
         div.innerHTML = `
         <h3>${category.category_name}</h3>
         <p>${category.description}</p>
-        <small>By: ${category.programmer} on 
-        ${new Date(category.createdOn).toLocaleString()}</small>`;
-        postsContainer.appendChild(div);
+        <small>By: ${category.programmer}</small>
+        `;
 
-        const catSelect = document.getElementById("filmCategory");
-        catSelect.innerHTML = "";
-        categories.forEach((category) => {
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.addEventListener("click", () => {
+          editingCategoryId = category.id;
+          document.getElementById("categoryEditTitle").textContent = "Edit category";
+          document.getElementById("catName").value = category.category_name;
+          document.getElementById("catColor").value = category.color;
+          document.getElementById("catSchedule").value = category.schedule;
+          document.getElementById("catProgrammer").value = category.programmer;
+          document.getElementById("catDescription").value = category.description;
+          document.getElementById("categoryEditOverlay").classList.add("is-open");
+        });
+        div.appendChild(editButton);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", () => {
+          editingCategoryId = category.id;
+          deleteCategory();
+        });
+        div.appendChild(deleteButton);
+
+        postsContainer.appendChild(div);
+      });
+
+      // Dropdown build now sits outside the category-card loop, so it only runs once
+      const catSelect = document.getElementById("filmCategory");
+      catSelect.innerHTML = "";
+      categories.forEach((category) => {
         const option = document.createElement("option");
         option.value = category.id;
         option.innerHTML = category.category_name;
         catSelect.appendChild(option);
       });
-      });
     });
 }
-
 
 function createCategory() {
     
