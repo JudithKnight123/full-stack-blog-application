@@ -1,5 +1,21 @@
 let token = localStorage.getItem("authToken");
 
+if (token) {
+  document.getElementById("loginBtn").classList.add("hidden");
+  document.getElementById("curatorAddFilmBtn").classList.remove("hidden");
+  document.getElementById("manageCategoriesBtn").classList.remove("hidden");
+  document.getElementById("logoutBtn").classList.remove("hidden");
+}
+document.querySelectorAll(".lightbox-trigger").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.target).classList.add("is-open");
+  });
+});
+document.querySelectorAll(".lightbox-close, .lightbox-cancel").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.target).classList.remove("is-open");
+  });
+});
 function register(event) {
   event.preventDefault();
   const username = document.getElementById("username").value;
@@ -193,13 +209,37 @@ function fetchPosts() {
       posts.forEach((post) => {
         const div = document.createElement("div");
         div.innerHTML = `
+        <img src="${post.image}" alt="${post.title}" style="max-width:200px;">
         <h3>${post.title}</h3>
         <p>${post.synopsis}</p>
-        <small>By: ${post.postedBy} on 
-        ${new Date(post.createdOn).toLocaleString()}</small>
-        <button onclick="editPost(${post.id})">Edit</button>
-        <button onclick="editingFilmId=${post.id}; deleteFilm();">Delete</button>
+        <small>By: ${post.postedBy} on ${new Date(post.createdOn).toLocaleString()}</small>
         `;
+
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.className = token ? "" : "hidden";
+        editButton.addEventListener("click", () => {
+          editingFilmId = post.id;
+          document.getElementById("filmTitle").value = post.title;
+          document.getElementById("filmCategory").value = post.categoryId;
+          document.getElementById("filmCert").value = post.cert;
+          document.getElementById("filmYear").value = post.year;
+          document.getElementById("filmImage").value = post.image;
+          document.getElementById("filmHint").value = post.hint;
+          document.getElementById("filmSynopsis").value = post.synopsis;
+          document.getElementById("filmOverlay").classList.add("is-open");
+        });
+        div.appendChild(editButton);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = token ? "" : "hidden";
+        deleteButton.addEventListener("click", () => {
+          editingFilmId = post.id;
+          deleteFilm();
+        });
+        div.appendChild(deleteButton);
+
         postsContainer.appendChild(div);
       });
     });
@@ -207,11 +247,11 @@ function fetchPosts() {
 
 function createPost() {
 
-  //Call the update function if we are editing a film
-   if (editingFilmId) {
+     if (editingFilmId) {
     updatePost();
     return;
   }
+
   const title = document.getElementById("filmTitle").value;
   const categoryId = document.getElementById("filmCategory").value;
   const cert = document.getElementById("filmCert").value;
@@ -258,6 +298,8 @@ function updatePost() {
       fetchPosts();
     });
 }
+
+
 function deleteFilm() {
   const title = document.getElementById("filmTitle").value;
   const categoryId = document.getElementById("filmCategory").value;
@@ -286,13 +328,3 @@ fetchCategories();
 fetchPosts();
 
 
-document.querySelectorAll(".lightbox-trigger").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.getElementById(btn.dataset.target).classList.add("is-open");
-  });
-});
-document.querySelectorAll(".lightbox-close, .lightbox-cancel").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.getElementById(btn.dataset.target).classList.remove("is-open");
-  });
-});
