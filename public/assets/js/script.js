@@ -75,6 +75,8 @@ function logout() {
 // PULLS CATEGORIES FROM THE BACKEND
 // =================================
 
+let editingCategoryId = null;
+
 function fetchCategories() {
   fetch("http://localhost:3001/api/categories", {
     method: "GET",
@@ -92,6 +94,15 @@ function fetchCategories() {
         <small>By: ${category.programmer} on 
         ${new Date(category.createdOn).toLocaleString()}</small>`;
         postsContainer.appendChild(div);
+
+        const catSelect = document.getElementById("filmCategory");
+        catSelect.innerHTML = "";
+        categories.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.innerHTML = category.category_name;
+        catSelect.appendChild(option);
+      });
       });
     });
 }
@@ -116,13 +127,59 @@ function createCategory() {
     .then((res) => res.json())
     .then(() => {
       alert("Category saved successfully");
+
+      document.getElementById("categoryEditOverlay").classList.remove("is-open");
       fetchCategories();
     });
 }
+function updateCategory() {
 
+  const category_name = document.getElementById("catName").value;
+  const color = document.getElementById("catColor").value;
+  const schedule = document.getElementById("catSchedule").value;
+  const programmer = document.getElementById("catProgrammer").value;
+  const description = document.getElementById("catDescription").value;
+
+  fetch("http://localhost:3001/api/categories/" + editingCategoryId, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ category_name, color, schedule, programmer, description }),
+  })
+    .then((res) => res.json())
+    .then(() => {
+      alert("Category updated successfully");
+      fetchCategories();
+    });
+}
+function deleteCategory() {
+  const category_name = document.getElementById("catName").value;
+  const color = document.getElementById("catColor").value;
+  const schedule = document.getElementById("catSchedule").value;
+  const programmer = document.getElementById("catProgrammer").value;
+  const description = document.getElementById("catDescription").value;
+
+  fetch("http://localhost:3001/api/categories/" + editingCategoryId, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ category_name, color, schedule, programmer, description }),
+  })
+    .then((res) => res.json())
+    .then(() => {
+      alert("Category deleted successfully");
+      fetchCategories();
+    });
+}
 // =================================
 // PULLS FILMS FROM THE BACKEND
 // =================================
+
+let editingFilmId = null;
 
 function fetchPosts() {
   fetch("http://localhost:3001/api/posts", {
@@ -137,7 +194,7 @@ function fetchPosts() {
         const div = document.createElement("div");
         div.innerHTML = `
         <h3>${post.title}</h3>
-        <p>${post.content}</p>
+        <p>${post.synopsis}</p>
         <small>By: ${post.postedBy} on 
         ${new Date(post.createdOn).toLocaleString()}</small>
         <button onclick="editPost(${post.id})">Edit</button>
@@ -157,11 +214,7 @@ function createPost() {
   }
   const title = document.getElementById("filmTitle").value;
   const categoryId = document.getElementById("filmCategory").value;
-  const date = document.getElementById("filmDate").value;
   const cert = document.getElementById("filmCert").value;
-  const genre = document.getElementById("filmGenre").value;
-  const runtime = document.getElementById("filmRuntime").value;
-  const country = document.getElementById("filmCountry").value;
   const year = document.getElementById("filmYear").value;
   const image = document.getElementById("filmImage").value;
   const hint = document.getElementById("filmHint").value;
@@ -173,22 +226,19 @@ function createPost() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ title, categoryId, date, cert, genre, runtime, country, year, image, hint, synopsis, postedBy: "User" }),
+    body: JSON.stringify({ title, categoryId, cert, year, image, hint, synopsis, postedBy: "User" }),
   })
     .then((res) => res.json())
     .then(() => {
       alert("Post created successfully");
+       document.getElementById("filmOverlay").classList.remove("is-open");
       fetchPosts();
     });
 }
 function updatePost() {
   const title = document.getElementById("filmTitle").value;
   const categoryId = document.getElementById("filmCategory").value;
-  const date = document.getElementById("filmDate").value;
   const cert = document.getElementById("filmCert").value;
-  const genre = document.getElementById("filmGenre").value;
-  const runtime = document.getElementById("filmRuntime").value;
-  const country = document.getElementById("filmCountry").value;
   const year = document.getElementById("filmYear").value;
   const image = document.getElementById("filmImage").value;
   const hint = document.getElementById("filmHint").value;
@@ -200,7 +250,7 @@ function updatePost() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ title, categoryId, date, cert, genre, runtime, country, year, image, hint, synopsis, postedBy: "User" }),
+    body: JSON.stringify({ title, categoryId, cert, year, image, hint, synopsis, postedBy: "User" }),
   })
     .then((res) => res.json())
     .then(() => {
@@ -210,7 +260,12 @@ function updatePost() {
 }
 function deleteFilm() {
   const title = document.getElementById("filmTitle").value;
-  const content = document.getElementById("filmSynopsis").value;
+  const categoryId = document.getElementById("filmCategory").value;
+  const cert = document.getElementById("filmCert").value;
+  const year = document.getElementById("filmYear").value;
+  const image = document.getElementById("filmImage").value;
+  const hint = document.getElementById("filmHint").value;
+  const synopsis = document.getElementById("filmSynopsis").value;
 
   fetch("http://localhost:3001/api/posts/" + editingFilmId, {
     method: "DELETE",
@@ -218,7 +273,7 @@ function deleteFilm() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ title, content, postedBy: "User" }),
+    body: JSON.stringify({ title, categoryId, cert, year, image, hint, synopsis, postedBy: "User" }),
   })
     .then((res) => res.json())
     .then(() => {

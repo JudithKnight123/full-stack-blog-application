@@ -20,17 +20,18 @@
       <p class="tag">Free film screenings · The Park Tavern, Macclesfield</p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-ghost btn-small hidden" id="curatorAddFilmBtn" data-target="filmOverlay">＋ Add film</button>
+      <button class="btn btn-ghost btn-small lightbox-trigger hidden" id="curatorAddFilmBtn" data-target="filmOverlay">＋ Add film</button>
       <button class="btn btn-ghost lightbox-trigger" id="loginBtn" data-target="loginOverlay">Curator</button>
       <button class="btn btn-ghost hidden" onclick="logout()" id="logoutBtn">Logout</button>
-    
+      
     </div>
   </div>
 </header>
 <div class="sprockets"></div>
 
 <div class="tabs-wrap">
-  <nav class="tabs" id="tabs" aria-label="Filter by category"></nav>
+  <nav class="tabs" id="tabs" aria-label="Filter by category">
+    <button class="btn btn-ghost lightbox-trigger hidden" data-target="categoryOverlay" id="manageCategoriesBtn">Manage categories</button></nav>
 </div>
 
 <main>
@@ -91,7 +92,7 @@
       <h2>Manage categories</h2>
       <div id="categoryList"></div>
       <div class="form-actions" style="justify-content:flex-start; margin-top:18px;">
-        <button class="btn btn-teal btn-small" id="addCategoryBtn" onclick="fetchCategories()">＋ Add category</button>
+        <button class="btn btn-teal btn-small lightbox-trigger" data-target="categoryEditOverlay" id="addCategoryBtn">＋ Add category</button>
       </div>
     </div>
   </div>
@@ -131,7 +132,7 @@
           <button type="button" class="btn btn-crimson btn-small" id="catDeleteBtn" style="display:none;">Delete category</button>
           <span style="flex:1 1 auto;"></span>
           <button type="button" class="btn btn-small lightbox-cancel" id="catCancelBtn" data-target="categoryEditOverlay">Cancel</button>
-          <button type="submit" class="btn btn-teal btn-small" onclick="createCategory()">Save category</button>
+          <button type="button" class="btn btn-teal btn-small" onclick="createCategory()">Save category</button>
         </div>
       </form>
     </div>
@@ -143,6 +144,7 @@
   <div class="lightbox-box">
     <button class="lightbox-close" id="filmClose" data-target="filmOverlay" aria-label="Close">✕</button>
     <div class="lightbox-inner">
+
       <h2 id="filmEditTitle">Add film</h2>
       <form id="filmEditForm">
         <div class="field-row">
@@ -157,10 +159,6 @@
         </div>
         <div class="field-row">
           <div class="field">
-            <label for="filmDate">Date</label>
-            <input type="date" id="filmDate" required>
-          </div>
-          <div class="field">
             <label for="filmCert">Certificate</label>
             <select id="filmCert">
               <option>U</option><option>PG</option><option>12</option><option selected>15</option><option>18</option>
@@ -168,11 +166,6 @@
           </div>
         </div>
         <div class="field-row">
-          <div class="field"><label for="filmGenre">Genre</label><input type="text" id="filmGenre" placeholder="e.g. Drama"></div>
-          <div class="field"><label for="filmRuntime">Runtime</label><input type="text" id="filmRuntime" placeholder="e.g. 1 hr 44 mins"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label for="filmCountry">Country</label><input type="text" id="filmCountry" placeholder="e.g. Portugal"></div>
           <div class="field"><label for="filmYear">Year</label><input type="text" id="filmYear" placeholder="e.g. 2024"></div>
         </div>
         <div class="field">
@@ -190,10 +183,10 @@
         </div>
         <p class="form-error" id="filmEditError"></p>
         <div class="form-actions">
-          <button type="button" class="btn btn-crimson btn-small" id="filmDeleteBtn" style="display:none;" onclick="deletePost()">Delete film</button>
+          <button type="button" class="btn btn-crimson btn-small" id="filmDeleteBtn" style="display:none;" onclick="deleteFilm()">Delete film</button>
           <span style="flex:1 1 auto;"></span>
           <button type="button" class="btn btn-small lightbox-cancel" id="filmCancelBtn" data-target="filmOverlay">Cancel</button>
-          <button type="submit" class="btn btn-teal btn-small" onclick="createPost()">Save film</button>
+          <button type="button" class="btn btn-teal btn-small lightbox-trigger" onclick="createPost()" data-target="filmOverlay">Save film</button>
         </div>
       </form>
     </div>
@@ -202,6 +195,6 @@
 
 
 <script src="assets/js/script.js"></script>
-<script src="assets/js/ui.js"></script>
+<!-- <script src="assets/js/ui.js"></script> -->
 </body>
 </html>

@@ -10,9 +10,29 @@ Post.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    content: {
-      type: DataTypes.TEXT,
+    categoryId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    cert: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    image: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    hint: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    synopsis: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     postedBy: {
       type: DataTypes.TEXT,
