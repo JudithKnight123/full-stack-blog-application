@@ -275,6 +275,11 @@ function createPost() {
       fetchPosts();
     });
 }
+function startNewFilm() {
+  editingFilmId = null;
+  document.getElementById("filmEditForm").reset();
+  document.getElementById("filmEditTitle").textContent = "Add film";
+}
 function updatePost() {
   const title = document.getElementById("filmTitle").value;
   const categoryId = document.getElementById("filmCategory").value;
@@ -295,6 +300,7 @@ function updatePost() {
     .then((res) => res.json())
     .then(() => {
       alert("Post updated successfully");
+      document.getElementById("filmOverlay").classList.remove("is-open");
       fetchPosts();
     });
 }
