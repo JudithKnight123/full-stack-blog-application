@@ -47,6 +47,7 @@ function login(event) {
         // Hide the auth container and show the app container as we're now logged in
         document.getElementById("loginBtn").classList.add("hidden");
         document.getElementById("curatorAddFilmBtn").classList.remove("hidden");
+        document.getElementById("manageCategoriesBtn").classList.remove("hidden");
         document.getElementById("logoutBtn").classList.remove("hidden");
         document.getElementById("loginOverlay").classList.remove("is-open");
       } else {
@@ -80,14 +81,25 @@ function fetchCategories() {
     headers: { Authorization: `Bearer ${token}` },
   })
     .then((res) => res.json())
-   .then((categories) => {
-      window.categories = categories;
-      renderAll();
+    .then((categories) => {
+      const postsContainer = document.getElementById("categoryList");
+      postsContainer.innerHTML = "";
+      categories.forEach((category) => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+        <h3>${category.category_name}</h3>
+        <p>${category.description}</p>
+        <small>By: ${category.programmer} on 
+        ${new Date(category.createdOn).toLocaleString()}</small>`;
+        postsContainer.appendChild(div);
+      });
     });
 }
+
+
 function createCategory() {
     
-  const name = document.getElementById("catName").value;
+  const category_name = document.getElementById("catName").value;
   const color = document.getElementById("catColor").value;
   const schedule = document.getElementById("catSchedule").value;
   const programmer = document.getElementById("catProgrammer").value;
@@ -99,12 +111,12 @@ function createCategory() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ name, color, schedule, programmer, description }),
-  })
+    body: JSON.stringify({ category_name, color, schedule, programmer, description }),
+    })
     .then((res) => res.json())
     .then(() => {
       alert("Category saved successfully");
-      fetchPosts();
+      fetchCategories();
     });
 }
 
@@ -119,8 +131,20 @@ function fetchPosts() {
   })
     .then((res) => res.json())
     .then((posts) => {
-      films = posts;
-      renderAll();
+      const postsContainer = document.getElementById("grid");
+      postsContainer.innerHTML = "";
+      posts.forEach((post) => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+        <h3>${post.title}</h3>
+        <p>${post.content}</p>
+        <small>By: ${post.postedBy} on 
+        ${new Date(post.createdOn).toLocaleString()}</small>
+        <button onclick="editPost(${post.id})">Edit</button>
+        <button onclick="editingFilmId=${post.id}; deleteFilm();">Delete</button>
+        `;
+        postsContainer.appendChild(div);
+      });
     });
 }
 
@@ -205,3 +229,15 @@ function deleteFilm() {
 
 fetchCategories();
 fetchPosts();
+
+
+document.querySelectorAll(".lightbox-trigger").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.target).classList.add("is-open");
+  });
+});
+document.querySelectorAll(".lightbox-close, .lightbox-cancel").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.target).classList.remove("is-open");
+  });
+});

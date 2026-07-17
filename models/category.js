@@ -10,6 +10,22 @@ Category.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    color: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    schedule: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    programmer: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
   },
   {
     sequelize,
