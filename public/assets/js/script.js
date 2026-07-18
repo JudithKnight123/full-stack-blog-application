@@ -195,6 +195,11 @@ function createCategory() {
       fetchCategories();
     });
 }
+function startNewCategory() {
+  editingCategoryId = null;
+  document.getElementById("categoryEditForm").reset();
+  document.getElementById("categoryEditTitle").textContent = "Add category";
+}
 function updateCategory() {
 
   const category_name = document.getElementById("catName").value;
@@ -250,12 +255,12 @@ function fetchPosts() {
     headers: { Authorization: `Bearer ${token}` },
   })
     .then((res) => res.json())
-.then((posts) => {
-  const postsContainer = document.getElementById("grid");
-  postsContainer.innerHTML = "";
-  const filteredPosts = selectedCategory ? posts.filter((post) => post.categoryId === selectedCategory) : posts;
-  filteredPosts.forEach((post) => {
-        const div = document.createElement("div");
+    .then((posts) => {
+      const postsContainer = document.getElementById("grid");
+      postsContainer.innerHTML = "";
+      const filteredPosts = selectedCategory ? posts.filter((post) => post.categoryId === selectedCategory) : posts;
+      filteredPosts.forEach((post) => {
+      const div = document.createElement("div");
         div.innerHTML = `
         <img src="${post.image}" alt="${post.title}" style="max-width:200px;">
         <h3>${post.title}</h3>
@@ -270,7 +275,10 @@ function fetchPosts() {
           editingFilmId = post.id;
           document.getElementById("filmTitle").value = post.title;
           document.getElementById("filmCategory").value = post.categoryId;
+          document.getElementById("filmDate").value = post.date;
           document.getElementById("filmCert").value = post.cert;
+          document.getElementById("filmGenre").value = post.genre;
+          document.getElementById("filmRuntime").value = post.runtime;
           document.getElementById("filmYear").value = post.year;
           document.getElementById("filmImage").value = post.image;
           document.getElementById("filmHint").value = post.hint;
@@ -302,7 +310,10 @@ function createPost() {
 
   const title = document.getElementById("filmTitle").value;
   const categoryId = document.getElementById("filmCategory").value;
+  const date = document.getElementById("filmDate").value;
   const cert = document.getElementById("filmCert").value;
+  const genre = document.getElementById("filmGenre").value;
+  const runtime = document.getElementById("filmRuntime").value;
   const year = document.getElementById("filmYear").value;
   const image = document.getElementById("filmImage").value;
   const hint = document.getElementById("filmHint").value;
@@ -314,7 +325,7 @@ function createPost() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ title, categoryId, cert, year, image, hint, synopsis, postedBy: "User" }),
+    body: JSON.stringify({ title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis, postedBy: "User" }),
   })
     .then((res) => res.json())
     .then(() => {
@@ -331,7 +342,10 @@ function startNewFilm() {
 function updatePost() {
   const title = document.getElementById("filmTitle").value;
   const categoryId = document.getElementById("filmCategory").value;
+  const date = document.getElementById("filmDate").value;
   const cert = document.getElementById("filmCert").value;
+  const genre = document.getElementById("filmGenre").value;
+  const runtime = document.getElementById("filmRuntime").value;
   const year = document.getElementById("filmYear").value;
   const image = document.getElementById("filmImage").value;
   const hint = document.getElementById("filmHint").value;
@@ -343,7 +357,7 @@ function updatePost() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ title, categoryId, cert, year, image, hint, synopsis, postedBy: "User" }),
+    body: JSON.stringify({ title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis, postedBy: "User" }),
   })
     .then((res) => res.json())
     .then(() => {
@@ -357,7 +371,10 @@ function updatePost() {
 function deleteFilm() {
   const title = document.getElementById("filmTitle").value;
   const categoryId = document.getElementById("filmCategory").value;
+  const date = document.getElementById("filmDate").value;
   const cert = document.getElementById("filmCert").value;
+  const genre = document.getElementById("filmGenre").value;
+  const runtime = document.getElementById("filmRuntime").value;
   const year = document.getElementById("filmYear").value;
   const image = document.getElementById("filmImage").value;
   const hint = document.getElementById("filmHint").value;
@@ -369,7 +386,7 @@ function deleteFilm() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ title, categoryId, cert, year, image, hint, synopsis, postedBy: "User" }),
+    body: JSON.stringify({ title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis, postedBy: "User" }),
   })
     .then((res) => res.json())
     .then(() => {

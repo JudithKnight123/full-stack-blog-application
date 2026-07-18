@@ -20,7 +20,8 @@
       <p class="tag">Free film screenings · The Park Tavern, Macclesfield</p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-ghost btn-small lightbox-trigger hidden" id="curatorAddFilmBtn" data-target="filmOverlay">＋ Add film</button>
+      <button class="btn btn-ghost btn-small lightbox-trigger hidden" id="curatorAddFilmBtn" data-target="filmOverlay" onclick="startNewFilm()">＋ Add film</button>
+      <!-- <button class="btn btn-ghost btn-small lightbox-trigger hidden" id="curatorAddFilmBtn" data-target="filmOverlay" onclick="createPost()">＋ Add film</button> -->
       <button class="btn btn-ghost lightbox-trigger" id="loginBtn" data-target="loginOverlay">Curator</button>
       <button class="btn btn-ghost hidden" onclick="logout()" id="logoutBtn">Logout</button>
       
@@ -31,7 +32,8 @@
 
 <div class="tabs-wrap">
   <nav class="tabs" id="tabs" aria-label="Filter by category">
-    <button class="btn btn-ghost lightbox-trigger hidden" data-target="categoryOverlay" id="manageCategoriesBtn">Manage categories</button></nav>
+    <button class="tab active" onclick="selectedCategory=null; fetchPosts();">All screenings</button>
+    <button class="manage-link lightbox-trigger hidden" data-target="categoryOverlay" id="manageCategoriesBtn">Manage categories</button></nav>
 </div>
 
 <main>
@@ -92,7 +94,7 @@
       <h2>Manage categories</h2>
       <div id="categoryList"></div>
       <div class="form-actions" style="justify-content:flex-start; margin-top:18px;">
-        <button class="btn btn-teal btn-small lightbox-trigger" data-target="categoryEditOverlay" id="addCategoryBtn">＋ Add category</button>
+        <button class="btn btn-teal btn-small lightbox-trigger" data-target="categoryEditOverlay" id="addCategoryBtn" onclick="startNewCategory()">＋ Add category</button>
       </div>
     </div>
   </div>
@@ -159,11 +161,19 @@
         </div>
         <div class="field-row">
           <div class="field">
+            <label for="filmDate">Date</label>
+            <input type="date" id="filmDate" required="">
+          </div>
+          <div class="field">
             <label for="filmCert">Certificate</label>
             <select id="filmCert">
-              <option>U</option><option>PG</option><option>12</option><option selected>15</option><option>18</option>
+              <option>U</option><option>PG</option><option>12</option><option selected="">15</option><option>18</option>
             </select>
           </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="filmGenre">Genre</label><input type="text" id="filmGenre" placeholder="e.g. Drama"></div>
+          <div class="field"><label for="filmRuntime">Runtime</label><input type="text" id="filmRuntime" placeholder="e.g. 1 hr 44 mins"></div>
         </div>
         <div class="field-row">
           <div class="field"><label for="filmYear">Year</label><input type="text" id="filmYear" placeholder="e.g. 2024"></div>

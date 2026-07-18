@@ -14,7 +14,19 @@ Post.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
     cert: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    genre: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    runtime: { 
       type: DataTypes.TEXT,
       allowNull: true,
     },
