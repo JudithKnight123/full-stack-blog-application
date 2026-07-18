@@ -172,6 +172,12 @@ function fetchCategories() {
 }
 
 function createCategory() {
+
+  // Editing an existing category? Update instead of creating a new one 
+   if (editingCategoryId) {
+    updateCategory();
+    return;
+  }
     
   const category_name = document.getElementById("catName").value;
   const schedule = document.getElementById("catSchedule").value;
@@ -190,7 +196,6 @@ function createCategory() {
     .then((res) => res.json())
     .then(() => {
       alert("Category saved successfully");
-
       document.getElementById("categoryEditOverlay").classList.remove("is-open");
       fetchCategories();
     });
@@ -218,7 +223,8 @@ function updateCategory() {
   })
     .then((res) => res.json())
     .then(() => {
-      alert("Category updated successfully");
+      alert("Category updated successfully"); 
+      document.getElementById("categoryEditOverlay").classList.remove("is-open");     
       fetchCategories();
     });
 }
@@ -303,6 +309,8 @@ function fetchPosts() {
 
 function createPost() {
 
+
+  // Editing an existing post? Update instead of creating a new one  
      if (editingFilmId) {
     updatePost();
     return;
