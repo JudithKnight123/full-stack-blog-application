@@ -7,8 +7,8 @@ const { Category } = require("../models/index");
 // Route to add a new post
 app.post("/", async (req, res) => {
   try {
-  const { category_name, color, schedule, programmer, description } = req.body;
-  const category = await Category.create({ category_name, color, schedule, programmer, description });
+  const { category_name, schedule, color, programmer, description } = req.body;
+  const category = await Category.create({ category_name, schedule, color, programmer, description });
     res.status(201).json(category);
   } catch (error) {
     console.log(error);
@@ -40,9 +40,9 @@ app.get("/:id", async (req, res) => {
 // Route to update a category
 app.put("/:id", async (req, res) => {
   try {
-    const { category_name, color, schedule, programmer, description } = req.body;
+    const { category_name, schedule, color, programmer, description } = req.body;
     const post = await Category.update(
-      { category_name, color, schedule, programmer, description },
+      { category_name, schedule, color, programmer, description },
       { where: { id: req.params.id } }
     );
     res.json(post);
@@ -52,7 +52,7 @@ app.put("/:id", async (req, res) => {
 });
 
 // Route to delete a category
-app.delete("//:id", async (req, res) => {
+app.delete("/:id", async (req, res) => {
   try {
     const category = await Category.destroy({ where: { id: req.params.id } });
     res.json(category);
