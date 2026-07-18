@@ -92,12 +92,15 @@ function logout() {
 // =================================
 
 let editingCategoryId = null;
+let selectedCategory = null;
 
 function fetchCategories() {
   fetch("http://localhost:3001/api/categories", {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   })
+
+
     .then((res) => res.json())
     .then((categories) => {
       const postsContainer = document.getElementById("categoryList");
@@ -133,6 +136,8 @@ function fetchCategories() {
         div.appendChild(deleteButton);
 
         postsContainer.appendChild(div);
+        
+        
       });
 
       // Dropdown build now sits outside the category-card loop, so it only runs once
@@ -144,6 +149,25 @@ function fetchCategories() {
         option.innerHTML = category.category_name;
         catSelect.appendChild(option);
       });
+
+      document.querySelectorAll("#tabs .cat-tab").forEach((btn) => btn.remove());
+      const tabsContainer = document.getElementById("tabs");
+      categories.forEach((category) => {
+        const tabButton = document.createElement("button");
+        tabButton.className = "tab cat-tab";
+        tabButton.textContent = category.category_name;
+
+// When this category tab is clicked, remember which category was picked
+// and refresh the film grid so it only shows films in that category
+
+        tabButton.addEventListener("click", () => {
+  selectedCategory = category.id;
+  fetchPosts();
+});
+
+        tabsContainer.insertBefore(tabButton, document.getElementById("manageCategoriesBtn"));
+      });
+
     });
 }
 
@@ -226,10 +250,11 @@ function fetchPosts() {
     headers: { Authorization: `Bearer ${token}` },
   })
     .then((res) => res.json())
-    .then((posts) => {
-      const postsContainer = document.getElementById("grid");
-      postsContainer.innerHTML = "";
-      posts.forEach((post) => {
+.then((posts) => {
+  const postsContainer = document.getElementById("grid");
+  postsContainer.innerHTML = "";
+  const filteredPosts = selectedCategory ? posts.filter((post) => post.categoryId === selectedCategory) : posts;
+  filteredPosts.forEach((post) => {
         const div = document.createElement("div");
         div.innerHTML = `
         <img src="${post.image}" alt="${post.title}" style="max-width:200px;">
