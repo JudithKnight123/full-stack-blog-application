@@ -6,6 +6,8 @@ if (token) {
   document.getElementById("manageCategoriesBtn").classList.remove("hidden");
   document.getElementById("logoutBtn").classList.remove("hidden");
 }
+
+//lightbox triggers
 document.querySelectorAll(".lightbox-trigger").forEach(btn => {
   btn.addEventListener("click", () => {
     document.getElementById(btn.dataset.target).classList.add("is-open");
@@ -16,6 +18,7 @@ document.querySelectorAll(".lightbox-close, .lightbox-cancel").forEach(btn => {
     document.getElementById(btn.dataset.target).classList.remove("is-open");
   });
 });
+
 function register(event) {
   event.preventDefault();
   const username = document.getElementById("username").value;
@@ -93,6 +96,17 @@ function logout() {
 
 let editingCategoryId = null;
 let selectedCategory = null;
+
+// Form Values moved to a function so they can be used for both creating and updating categories
+function getCategoryFormValues() {
+  return {
+    category_name: document.getElementById("catName").value,
+    schedule: document.getElementById("catSchedule").value,
+    color: document.getElementById("catColor").value,
+    programmer: document.getElementById("catProgrammer").value,
+    description: document.getElementById("catDescription").value,
+  };
+}
 
 function fetchCategories() {
   fetch("http://localhost:3001/api/categories", {
@@ -179,11 +193,7 @@ function createCategory() {
     return;
   }
     
-  const category_name = document.getElementById("catName").value;
-  const schedule = document.getElementById("catSchedule").value;
-  const color = document.getElementById("catColor").value;
-  const programmer = document.getElementById("catProgrammer").value;
-  const description = document.getElementById("catDescription").value;
+  const { category_name, schedule, color, programmer, description } = getCategoryFormValues();
   
   fetch("http://localhost:3001/api/categories", {
     method: "POST",
@@ -207,11 +217,7 @@ function startNewCategory() {
 }
 function updateCategory() {
 
-  const category_name = document.getElementById("catName").value;
-  const schedule = document.getElementById("catSchedule").value;
-  const color = document.getElementById("catColor").value;
-  const programmer = document.getElementById("catProgrammer").value;
-  const description = document.getElementById("catDescription").value;
+  const { category_name, schedule, color, programmer, description } = getCategoryFormValues();
 
   fetch("http://localhost:3001/api/categories/" + editingCategoryId, {
     method: "PUT",
@@ -229,11 +235,7 @@ function updateCategory() {
     });
 }
 function deleteCategory() {
-  const category_name = document.getElementById("catName").value;
-  const schedule = document.getElementById("catSchedule").value;
-  const color = document.getElementById("catColor").value;
-  const programmer = document.getElementById("catProgrammer").value;
-  const description = document.getElementById("catDescription").value;
+  const { category_name, schedule, color, programmer, description } = getCategoryFormValues();
 
   fetch("http://localhost:3001/api/categories/" + editingCategoryId, {
     method: "DELETE",
@@ -254,6 +256,22 @@ function deleteCategory() {
 // =================================
 
 let editingFilmId = null;
+
+// Form Values moved to a function so they can be used for both creating and updating categories
+function getFilmFormValues() {
+  return {
+    title: document.getElementById("filmTitle").value,
+    categoryId: document.getElementById("filmCategory").value,
+    date: document.getElementById("filmDate").value,
+    cert: document.getElementById("filmCert").value,
+    genre: document.getElementById("filmGenre").value,
+    runtime: document.getElementById("filmRuntime").value,
+    year: document.getElementById("filmYear").value,
+    image: document.getElementById("filmImage").value,
+    hint: document.getElementById("filmHint").value,
+    synopsis: document.getElementById("filmSynopsis").value,
+  };
+}
 
 function fetchPosts() {
   fetch("http://localhost:3001/api/posts", {
@@ -316,16 +334,7 @@ function createPost() {
     return;
   }
 
-  const title = document.getElementById("filmTitle").value;
-  const categoryId = document.getElementById("filmCategory").value;
-  const date = document.getElementById("filmDate").value;
-  const cert = document.getElementById("filmCert").value;
-  const genre = document.getElementById("filmGenre").value;
-  const runtime = document.getElementById("filmRuntime").value;
-  const year = document.getElementById("filmYear").value;
-  const image = document.getElementById("filmImage").value;
-  const hint = document.getElementById("filmHint").value;
-  const synopsis = document.getElementById("filmSynopsis").value;
+  const { title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis } = getFilmFormValues();
 
   fetch("http://localhost:3001/api/posts", {
     method: "POST",
@@ -348,16 +357,7 @@ function startNewFilm() {
   document.getElementById("filmEditTitle").textContent = "Add film";
 }
 function updatePost() {
-  const title = document.getElementById("filmTitle").value;
-  const categoryId = document.getElementById("filmCategory").value;
-  const date = document.getElementById("filmDate").value;
-  const cert = document.getElementById("filmCert").value;
-  const genre = document.getElementById("filmGenre").value;
-  const runtime = document.getElementById("filmRuntime").value;
-  const year = document.getElementById("filmYear").value;
-  const image = document.getElementById("filmImage").value;
-  const hint = document.getElementById("filmHint").value;
-  const synopsis = document.getElementById("filmSynopsis").value;
+  const { title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis } = getFilmFormValues();
 
   fetch("http://localhost:3001/api/posts/" + editingFilmId, {
     method: "PUT",
@@ -377,16 +377,7 @@ function updatePost() {
 
 
 function deleteFilm() {
-  const title = document.getElementById("filmTitle").value;
-  const categoryId = document.getElementById("filmCategory").value;
-  const date = document.getElementById("filmDate").value;
-  const cert = document.getElementById("filmCert").value;
-  const genre = document.getElementById("filmGenre").value;
-  const runtime = document.getElementById("filmRuntime").value;
-  const year = document.getElementById("filmYear").value;
-  const image = document.getElementById("filmImage").value;
-  const hint = document.getElementById("filmHint").value;
-  const synopsis = document.getElementById("filmSynopsis").value;
+  const { title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis } = getFilmFormValues();
 
   fetch("http://localhost:3001/api/posts/" + editingFilmId, {
     method: "DELETE",
