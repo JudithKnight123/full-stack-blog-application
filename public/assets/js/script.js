@@ -19,12 +19,12 @@ document.querySelectorAll(".lightbox-close, .lightbox-cancel").forEach(btn => {
   });
 });
 
-function register(event) {
-  event.preventDefault();
+function register(e) {
+  e.preventDefault();
   const username = document.getElementById("username").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  fetch("http://localhost:3001/api/users", {
+  fetch("/api/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password }),
@@ -42,11 +42,11 @@ function register(event) {
     });
 }
 
-function login(event) { 
-  event.preventDefault();
+function login(e) { 
+  e.preventDefault();
   const email = document.getElementById("login-email").value;
   const password = document.getElementById("login-password").value;
-  fetch("http://localhost:3001/api/users/login", {
+  fetch("/api/users/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -79,7 +79,7 @@ function login(event) {
 }
 
 function logout() {
-  fetch("http://localhost:3001/api/users/logout", {
+  fetch("/api/users/logout", {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
   }).then(() => {
@@ -109,7 +109,7 @@ function getCategoryFormValues() {
 }
 
 function fetchCategories() {
-  fetch("http://localhost:3001/api/categories", {
+  fetch("/api/categories", {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   })
@@ -195,7 +195,7 @@ function createCategory() {
     
   const { category_name, schedule, color, programmer, description } = getCategoryFormValues();
   
-  fetch("http://localhost:3001/api/categories", {
+  fetch("/api/categories", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -219,7 +219,7 @@ function updateCategory() {
 
   const { category_name, schedule, color, programmer, description } = getCategoryFormValues();
 
-  fetch("http://localhost:3001/api/categories/" + editingCategoryId, {
+  fetch("/api/categories/" + editingCategoryId, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -237,7 +237,7 @@ function updateCategory() {
 function deleteCategory() {
   const { category_name, schedule, color, programmer, description } = getCategoryFormValues();
 
-  fetch("http://localhost:3001/api/categories/" + editingCategoryId, {
+  fetch("/api/categories/" + editingCategoryId, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -274,7 +274,7 @@ function getFilmFormValues() {
 }
 
 function fetchPosts() {
-  fetch("http://localhost:3001/api/posts", {
+  fetch("/api/posts", {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   })
@@ -336,7 +336,7 @@ function createPost() {
 
   const { title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis } = getFilmFormValues();
 
-  fetch("http://localhost:3001/api/posts", {
+  fetch("/api/posts", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -359,7 +359,7 @@ function startNewFilm() {
 function updatePost() {
   const { title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis } = getFilmFormValues();
 
-  fetch("http://localhost:3001/api/posts/" + editingFilmId, {
+  fetch("/api/posts/" + editingFilmId, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -379,7 +379,7 @@ function updatePost() {
 function deleteFilm() {
   const { title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis } = getFilmFormValues();
 
-  fetch("http://localhost:3001/api/posts/" + editingFilmId, {
+  fetch("/api/posts/" + editingFilmId, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
