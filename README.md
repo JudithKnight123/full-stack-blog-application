@@ -2,11 +2,19 @@
 
 A film club listings site built for The Park Tavern, Macclesfield — showcasing upcoming free screenings, organised into categories, with a curator login for managing the programme.
 
+## Deployment
+
+This app is deployed on [Render](https://render.com/)
+
+- **Live site:** [https://full-stack-blog-application-4szt.onrender.com](https://full-stack-blog-application-4szt.onrender.com)
+- **GitHub repository:** https://github.com/JudithKnight123/full-stack-blog-application
+- **Render Video:** https://drive.google.com/file/d/1bfFJ5iim4rL8zo5FAul_VqoO-jxNjlR8/view?usp=sharing
+
 ## Features
 
 - Curator registration, login, and logout (JWT-based authentication)
 - Full CRUD for film listings — add, edit, and delete screenings
-- Full CRUD for categories — add, edit, and delete the strands films are grouped under (e.g. "Thursdays: Independent & World Cinema")
+- Full CRUD for categories — add, edit, and delete the strands films are grouped under (e.g."Thursdays: Independent & World Cinema")
 - Filter the homepage by category
 - Content is fetched from the backend API and rendered dynamically — nothing on the page is hardcoded
 
@@ -85,13 +93,6 @@ A film club listings site built for The Park Tavern, Macclesfield — showcasing
 - Once logged in, use **+ Add film** to create a new screening, or the Edit/Delete buttons on any film card to manage existing ones.
 - Use **Manage categories** to add, edit, or delete the categories films are grouped under.
 - Click a category tab to filter the homepage to just that category, or **All screenings** to clear the filter.
-
-## Deployment
-
-This app is deployed on [Render](https://render.com/).
-
-- **Live site:** _[add your Render URL here once deployed]_
-- **GitHub repository:** https://github.com/JudithKnight123/full-stack-blog-application
 
 ## Project Structure
 
