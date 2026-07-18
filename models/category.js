@@ -10,11 +10,11 @@ Category.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    color: {
+    schedule: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    schedule: {
+    color: {
       type: DataTypes.STRING,
       allowNull: true,
     },

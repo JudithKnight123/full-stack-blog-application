@@ -174,8 +174,8 @@ function fetchCategories() {
 function createCategory() {
     
   const category_name = document.getElementById("catName").value;
-  const color = document.getElementById("catColor").value;
   const schedule = document.getElementById("catSchedule").value;
+  const color = document.getElementById("catColor").value;
   const programmer = document.getElementById("catProgrammer").value;
   const description = document.getElementById("catDescription").value;
   
@@ -185,7 +185,7 @@ function createCategory() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ category_name, color, schedule, programmer, description }),
+    body: JSON.stringify({ category_name, schedule, color, programmer, description }),
     })
     .then((res) => res.json())
     .then(() => {
@@ -198,8 +198,8 @@ function createCategory() {
 function updateCategory() {
 
   const category_name = document.getElementById("catName").value;
-  const color = document.getElementById("catColor").value;
   const schedule = document.getElementById("catSchedule").value;
+  const color = document.getElementById("catColor").value;
   const programmer = document.getElementById("catProgrammer").value;
   const description = document.getElementById("catDescription").value;
 
@@ -209,7 +209,7 @@ function updateCategory() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ category_name, color, schedule, programmer, description }),
+    body: JSON.stringify({ category_name, schedule, color, programmer, description }),
   })
     .then((res) => res.json())
     .then(() => {
@@ -219,8 +219,8 @@ function updateCategory() {
 }
 function deleteCategory() {
   const category_name = document.getElementById("catName").value;
-  const color = document.getElementById("catColor").value;
   const schedule = document.getElementById("catSchedule").value;
+  const color = document.getElementById("catColor").value;
   const programmer = document.getElementById("catProgrammer").value;
   const description = document.getElementById("catDescription").value;
 
@@ -230,7 +230,7 @@ function deleteCategory() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ category_name, color, schedule, programmer, description }),
+    body: JSON.stringify({ category_name, schedule, color, programmer, description }),
   })
     .then((res) => res.json())
     .then(() => {
