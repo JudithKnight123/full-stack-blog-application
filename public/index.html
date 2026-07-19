@@ -129,7 +129,7 @@
         </div>
         <p class="form-error" id="categoryEditError"></p>
         <div class="form-actions">
-          <button type="button" class="btn btn-crimson btn-small" id="catDeleteBtn" style="display:none;">Delete category</button>
+          <button type="button" class="btn btn-crimson btn-small" id="catDeleteBtn" style="display:none;" onclick="deleteCategory()">Delete category</button>
           <span style="flex:1 1 auto;"></span>
           <button type="button" class="btn btn-small lightbox-cancel" id="catCancelBtn" data-target="categoryEditOverlay">Cancel</button>
           <button type="button" class="btn btn-teal btn-small" onclick="createCategory()">Save category</button>
@@ -191,10 +191,9 @@
         </div>
         <p class="form-error" id="filmEditError"></p>
         <div class="form-actions">
-          <button type="button" class="btn btn-crimson btn-small" id="filmDeleteBtn" style="display:none;" onclick="deleteFilm()">Delete film</button>
-          <span style="flex:1 1 auto;"></span>
+          <button type="button" class="btn btn-crimson btn-small lightbox-cancel hidden" id="filmDeleteBtn" onclick="deleteFilm()" data-target="filmOverlay">Delete film</button>          
           <button type="button" class="btn btn-small lightbox-cancel" id="filmCancelBtn" data-target="filmOverlay">Cancel</button>
-          <button type="button" class="btn btn-teal btn-small lightbox-trigger" onclick="createPost()" data-target="filmOverlay">Save film</button>
+          <button type="button" class="btn btn-teal btn-small" onclick="createPost()" data-target="filmOverlay">Save film</button>
         </div>
       </form>
     </div>

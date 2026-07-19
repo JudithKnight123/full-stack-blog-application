@@ -159,6 +159,7 @@ function fetchCategories() {
         const editButton = document.createElement("button");
 
         editButton.textContent = "Edit";
+        editButton.className = "btn btn-small";
         editButton.addEventListener("click", () => {
           editingCategoryId = category.id;
           document.getElementById("categoryEditTitle").textContent = "Edit category";
@@ -356,6 +357,7 @@ function fetchPosts() {
         
         editButton.textContent = "Edit";
         editButton.className = "btn btn-small " + (token ? "" : "hidden");
+
         editButton.addEventListener("click", () => {
           editingFilmId = post.id;
           document.getElementById("filmTitle").value = post.title;
@@ -370,6 +372,7 @@ function fetchPosts() {
           document.getElementById("filmHint").value = post.hint;
           document.getElementById("filmSynopsis").value = post.synopsis;
           document.getElementById("filmOverlay").classList.add("is-open");
+          document.getElementById("filmDeleteBtn").classList.remove("hidden");
         });
         cardActions.appendChild(editButton);
 
@@ -417,6 +420,7 @@ function startNewFilm() {
   editingFilmId = null;
   document.getElementById("filmEditForm").reset();
   document.getElementById("filmEditTitle").textContent = "Add film";
+  document.getElementById("filmDeleteBtn").classList.add("hidden");
 }
 function updatePost() {
   const { title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis } = getFilmFormValues();
@@ -439,6 +443,7 @@ function updatePost() {
 
 
 function deleteFilm() {
+
   const { title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis } = getFilmFormValues();
 
   fetch("/api/posts/" + editingFilmId, {

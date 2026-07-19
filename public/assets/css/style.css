@@ -342,6 +342,35 @@
     font-size:0.85rem;
     cursor:pointer;
   }
+  .lightbox-box .cat-row-actions button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0;
+    line-height: 1;
+    padding: 6px;
+    background:none
+  }
+  .lightbox-box .cat-row-actions button:before{
+     content: "✎";
+    display: block;
+    width: 30px;
+    font-size: 2rem;
+    height: 30px;
+    color: var(--ink-soft);
+  }
+    .lightbox-box .cat-row-actions button.btn-crimson:before{
+     content: "x";
+    display: block;
+    width: 30px;
+    font-size: 2rem;
+    height: 30px;
+    color: var(--crimson);
+  }
+  .lightbox-box .cat-row-actions button:hover{
+    box-shadow: none;
+  }
+
   .lightbox-box hr{
     margin:20px 0;
     border:none;
@@ -430,14 +459,15 @@
 
   /* category manager list */
   .cat-row{
-    display:flex; align-items:center; gap:12px;
+    display:flex; 
+    flex-flow:row wrap; gap:12px;
     padding:12px 0; border-bottom:1px solid var(--line);
   }
   .cat-swatch{width:22px; height:22px; border-radius:50%; flex:0 0 auto; border:1px solid rgba(0,0,0,0.15);}
   .cat-row-info{flex:1 1 auto;}
   .cat-row-info strong{display:block; font-size:0.95rem;}
   .cat-row-info span{font-family:var(--font-mono); font-size:0.72rem; color:var(--ink-soft);}
-  .cat-row-actions{display:flex; gap:8px;}
+  .cat-row-actions{display:flex; gap:8px; flex-direction:column;}
 
   /* toast */
   #toast{
