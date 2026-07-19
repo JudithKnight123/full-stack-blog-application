@@ -332,7 +332,6 @@ function fetchPosts() {
             posterContent = `
               <div class="poster-generated" style="background:${catColor}; color:${textColor};">
                 <span class="poster-eyebrow">${cat ? cat.category_name : ""}</span>
-                <span class="poster-title">${post.title}</span>
               </div>
             `;
           }
