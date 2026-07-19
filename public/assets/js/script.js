@@ -37,6 +37,23 @@ function shortDate(iso) {
   if (isNaN(d)) return iso;
   return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 }
+//------------for edit film button
+function openFilmEditor(post) {
+  editingFilmId = post.id;
+  document.getElementById("filmTitle").value = post.title;
+  document.getElementById("filmCategory").value = post.categoryId;
+  document.getElementById("filmDate").value = post.date ? post.date.slice(0, 10) : "";
+  document.getElementById("filmCert").value = post.cert;
+  document.getElementById("filmGenre").value = post.genre;
+  document.getElementById("filmRuntime").value = post.runtime;
+  document.getElementById("filmYear").value = post.year;
+  document.getElementById("filmImage").value = post.image;
+  document.getElementById("filmImagePreview").style.backgroundImage = post.image ? `url('${post.image}')` : "";
+  document.getElementById("filmHint").value = post.hint;
+  document.getElementById("filmSynopsis").value = post.synopsis;
+  document.getElementById("filmOverlay").classList.add("is-open");
+  document.getElementById("filmDeleteBtn").classList.remove("hidden");
+}
 // =================================
 // AUTHENTICATION
 // =================================
@@ -314,7 +331,6 @@ function fetchPosts() {
       postsContainer.innerHTML = "";
       const filteredPosts = selectedCategory ? posts.filter((post) => post.categoryId === selectedCategory) : posts;
       filteredPosts.forEach((post) => {
-        console.log(post.title, post.image);
       const div = document.createElement("div");
       div.className = "poster-card";
 
@@ -357,20 +373,7 @@ function fetchPosts() {
         editButton.className = "btn btn-small " + (token ? "" : "hidden");
 
         editButton.addEventListener("click", () => {
-          editingFilmId = post.id;
-          document.getElementById("filmTitle").value = post.title;
-          document.getElementById("filmCategory").value = post.categoryId;
-          document.getElementById("filmDate").value = post.date ? post.date.slice(0, 10) : "";
-          document.getElementById("filmCert").value = post.cert;
-          document.getElementById("filmGenre").value = post.genre;
-          document.getElementById("filmRuntime").value = post.runtime;
-          document.getElementById("filmYear").value = post.year;
-          document.getElementById("filmImage").value = post.image;
-          document.getElementById("filmImagePreview").style.backgroundImage = post.image ? `url('${post.image}')` : "";
-          document.getElementById("filmHint").value = post.hint;
-          document.getElementById("filmSynopsis").value = post.synopsis;
-          document.getElementById("filmOverlay").classList.add("is-open");
-          document.getElementById("filmDeleteBtn").classList.remove("hidden");
+          openFilmEditor(post);
         });
         cardActions.appendChild(editButton);
 
@@ -500,8 +503,8 @@ function openDetail(post) {
       <p>${post.synopsis}</p>
       ${cat && cat.programmer ? `<p class="detail-programmer">Programmed by ${cat.programmer}</p>` : ""}
       <div class="detail-actions">
-        <button class="btn btn-teal btn-small" id="detailEditBtn">✎ Edit this film</button>
-        <button class="btn btn-crimson btn-small" id="detailDeleteBtn">🗑 Delete</button>
+        <button class="btn btn-teal btn-small ${token ? "" : "hidden"}" id="detailEditBtn">✎ Edit this film</button>
+        <button class="btn btn-crimson btn-small ${token ? "" : "hidden"}" id="detailDeleteBtn">🗑 Delete</button>
       </div>
     </div>
   `;

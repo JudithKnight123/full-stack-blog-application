@@ -425,8 +425,8 @@ main {
     font-size: 0.95rem;
     box-sizing: border-box;
 }
-.lightbox-box #registerForm button[type="button"],
-.lightbox-box #registerForm button {
+.lightbox-box #auth-container button[type="button"],
+.lightbox-box #auth-container button {
     padding: 9px 16px;
     border-radius: 3px;
     border: 1px solid transparent;
