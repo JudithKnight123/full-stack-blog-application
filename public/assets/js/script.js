@@ -25,9 +25,9 @@ document.querySelectorAll(".lightbox-close, .lightbox-cancel").forEach(btn => {
 // Checks if a hex color is light or dark, returns true for light colors
 function isLightColor(hex) {
   const c = hex.replace("#", "");
-  const r = parseInt(c.substr(0, 2), 16);
-  const g = parseInt(c.substr(2, 2), 16);
-  const b = parseInt(c.substr(4, 2), 16);
+  const r = parseInt(c.slice(0, 2), 16);
+  const g = parseInt(c.slice(2, 4), 16);
+  const b = parseInt(c.slice(4, 6), 16);
   return (0.299 * r + 0.587 * g + 0.114 * b) > 165;
 }
 // Formats a date string (e.g. "2026-07-31T00:00:00.000Z") into a short readable form like "31 Jul"
