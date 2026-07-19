@@ -262,6 +262,15 @@ function deleteCategory() {
 
 let editingFilmId = null;
 
+// Formats a date string (e.g. "2026-07-31T00:00:00.000Z") into a short readable form like "31 Jul"
+
+function shortDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d)) return iso;
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+}
+
 // Form Values moved to a function so they can be used for both creating and updating categories
 function getFilmFormValues() {
   return {
@@ -294,8 +303,8 @@ function fetchPosts() {
       div.className = "poster-card";
         div.innerHTML = `
             <div class="poster-visual">
-            <img src="${post.image}" alt="${post.title}" style="max-width:310px;"/>
-              <span class="date-tab">${post.date || ""}</span>
+            <img src="${post.image}" alt="${post.title}"/>
+              <span class="date-tab">${shortDate(post.date)}</span>
                 ${post.cert ? `<span class="cert-badge">${post.cert}</span>` : ""}
             </div>
             <div class="poster-meta">
@@ -320,6 +329,7 @@ function fetchPosts() {
           document.getElementById("filmRuntime").value = post.runtime;
           document.getElementById("filmYear").value = post.year;
           document.getElementById("filmImage").value = post.image;
+          document.getElementById("filmImagePreview").style.backgroundImage = post.image ? `url('${post.image}')` : "";
           document.getElementById("filmHint").value = post.hint;
           document.getElementById("filmSynopsis").value = post.synopsis;
           document.getElementById("filmOverlay").classList.add("is-open");
