@@ -18,6 +18,28 @@ document.querySelectorAll(".lightbox-close, .lightbox-cancel").forEach(btn => {
     document.getElementById(btn.dataset.target).classList.remove("is-open");
   });
 });
+// =================================
+// OPTIONAL UTILITY FUNCTIONS
+// =================================
+
+// Checks if a hex color is light or dark, returns true for light colors
+function isLightColor(hex) {
+  const c = hex.replace("#", "");
+  const r = parseInt(c.substr(0, 2), 16);
+  const g = parseInt(c.substr(2, 2), 16);
+  const b = parseInt(c.substr(4, 2), 16);
+  return (0.299 * r + 0.587 * g + 0.114 * b) > 165;
+}
+// Formats a date string (e.g. "2026-07-31T00:00:00.000Z") into a short readable form like "31 Jul"
+function shortDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d)) return iso;
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+}
+// =================================
+// AUTHENTICATION
+// =================================
 
 function register(e) {
   e.preventDefault();
@@ -96,6 +118,7 @@ function logout() {
 
 let editingCategoryId = null;
 let selectedCategory = null;
+let allCategories = [];
 
 // Form Values moved to a function so they can be used for both creating and updating categories
 function getCategoryFormValues() {
@@ -117,6 +140,7 @@ function fetchCategories() {
 
     .then((res) => res.json())
     .then((categories) => {
+      allCategories = categories; // Store the fetched categories in the global variable
       const postsContainer = document.getElementById("categoryList");
       postsContainer.innerHTML = "";
       categories.forEach((category) => {
@@ -256,20 +280,13 @@ function deleteCategory() {
       fetchCategories();
     });
 }
+
 // =================================
 // PULLS FILMS FROM THE BACKEND
 // =================================
 
 let editingFilmId = null;
 
-// Formats a date string (e.g. "2026-07-31T00:00:00.000Z") into a short readable form like "31 Jul"
-
-function shortDate(iso) {
-  if (!iso) return "";
-  const d = new Date(iso);
-  if (isNaN(d)) return iso;
-  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
-}
 
 // Form Values moved to a function so they can be used for both creating and updating categories
 function getFilmFormValues() {
@@ -301,17 +318,37 @@ function fetchPosts() {
         console.log(post.title, post.image);
       const div = document.createElement("div");
       div.className = "poster-card";
+
+      const cat = allCategories.find((c) => c.id === post.categoryId);
+      const catColor = cat ? cat.color : "#6e8f5c";
+      const textColor = isLightColor(catColor) ? "#22251e" : "#f7f4e9";
+
+      // decide what goes inside the poster box
+          let posterContent;
+          if (post.image) {
+            posterContent = `<img src="${post.image}" alt="${post.title}" class="poster-image" />`;
+          } else {
+            posterContent = `
+              <div class="poster-generated" style="background:${catColor}; color:${textColor};">
+                <span class="poster-eyebrow">${cat ? cat.category_name : ""}</span>
+                <span class="poster-title">${post.title}</span>
+              </div>
+            `;
+          }
+          // decide the certificate badge (only shown if a cert was set)
+          const certBadge = post.cert ? `<span class="cert-badge">${post.cert}</span>` : "";
+
         div.innerHTML = `
-            <div class="poster-visual">
-            <img src="${post.image}" alt="${post.title}"/>
-              <span class="date-tab">${shortDate(post.date)}</span>
-                ${post.cert ? `<span class="cert-badge">${post.cert}</span>` : ""}
-            </div>
-            <div class="poster-meta">
-              <h3>${post.title}</h3>
-              <p class="meta-line">${[post.genre, post.runtime, post.year].filter(Boolean).join(" · ")}</p>
-            </div>
-            <div class="card-actions"></div>
+             <div class="poster-visual">
+                ${posterContent}
+                <span class="date-tab">${shortDate(post.date)}</span>
+                ${certBadge}
+              </div>
+              <div class="poster-meta">
+                <h3>${post.title}</h3>
+                <p class="meta-line">${[post.genre, post.runtime, post.year].filter(Boolean).join(" · ")}</p>
+              </div>
+              <div class="card-actions"></div>
          `;
 
         const cardActions = div.querySelector(".card-actions");
