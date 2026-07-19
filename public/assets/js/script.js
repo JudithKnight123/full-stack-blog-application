@@ -121,13 +121,19 @@ function fetchCategories() {
       postsContainer.innerHTML = "";
       categories.forEach((category) => {
         const div = document.createElement("div");
+        div.className = "cat-row";
         div.innerHTML = `
-        <h3>${category.category_name}</h3>
-        <p>${category.description}</p>
-        <small>By: ${category.programmer}</small>
+        <span class="cat-swatch" style="background:${category.color}"></span>
+        <div class="cat-row-info">
+          <strong>${category.category_name}</strong>
+          <span>${category.schedule || ""}${category.programmer ? " · " + category.programmer : ""}</span>
+          <p>${category.description || ""}</p>
+        </div>
+        <div class="cat-row-actions"></div>
         `;
-
+        const catActions = div.querySelector(".cat-row-actions");
         const editButton = document.createElement("button");
+
         editButton.textContent = "Edit";
         editButton.addEventListener("click", () => {
           editingCategoryId = category.id;
@@ -139,19 +145,18 @@ function fetchCategories() {
           document.getElementById("catDescription").value = category.description;
           document.getElementById("categoryEditOverlay").classList.add("is-open");
         });
-        div.appendChild(editButton);
+        catActions.appendChild(editButton);
 
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
+        deleteButton.className = "btn btn-small btn-crimson";
         deleteButton.addEventListener("click", () => {
           editingCategoryId = category.id;
           deleteCategory();
         });
-        div.appendChild(deleteButton);
-
+        catActions.appendChild(deleteButton);
         postsContainer.appendChild(div);
-        
-        
+
       });
 
       // Dropdown build now sits outside the category-card loop, so it only runs once
@@ -285,6 +290,7 @@ function fetchPosts() {
       const filteredPosts = selectedCategory ? posts.filter((post) => post.categoryId === selectedCategory) : posts;
       filteredPosts.forEach((post) => {
       const div = document.createElement("div");
+      div.className = "poster-card";
         div.innerHTML = `
             <div class="poster-visual" style="background-image:url('${post.image}')">
               <span class="date-tab">${post.date || ""}</span>
@@ -297,9 +303,11 @@ function fetchPosts() {
             <div class="card-actions"></div>
          `;
 
+        const cardActions = div.querySelector(".card-actions");
         const editButton = document.createElement("button");
+        
         editButton.textContent = "Edit";
-        editButton.className = token ? "" : "hidden";
+        editButton.className = "btn btn-small " + (token ? "" : "hidden");
         editButton.addEventListener("click", () => {
           editingFilmId = post.id;
           document.getElementById("filmTitle").value = post.title;
@@ -314,16 +322,16 @@ function fetchPosts() {
           document.getElementById("filmSynopsis").value = post.synopsis;
           document.getElementById("filmOverlay").classList.add("is-open");
         });
-        div.appendChild(editButton);
+        cardActions.appendChild(editButton);
 
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
-        deleteButton.className = token ? "" : "hidden";
+        deleteButton.className = "btn btn-small btn-crimson " + (token ? "" : "hidden");
         deleteButton.addEventListener("click", () => {
           editingFilmId = post.id;
           deleteFilm();
         });
-        div.appendChild(deleteButton);
+        cardActions.appendChild(deleteButton);
 
         postsContainer.appendChild(div);
       });
