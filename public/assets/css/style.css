@@ -425,6 +425,16 @@ main {
     font-size: 0.95rem;
     box-sizing: border-box;
 }
+.lightbox-box #registerForm button[type="button"],
+.lightbox-box #registerForm button {
+    padding: 9px 16px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    background: #2c7a76;
+    color: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
 .lightbox-box .cat-row-actions button {
     background: none;
     border: none;
