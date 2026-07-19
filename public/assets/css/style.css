@@ -306,6 +306,7 @@ main {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     opacity: 0.85;
+    padding-top:2rem;
 }
 .poster-title {
     font-family: var(--font-display);
@@ -532,7 +533,7 @@ main {
 
 /* forms */
 .lightbox-inner {
-    padding: 32px;
+    padding: 0;
 }
 .lightbox-inner h2 {
     font-size: 1.5rem;
@@ -580,7 +581,7 @@ main {
 .field-row {
     display: flex;
     gap: 14px;
-    flex-wrap: wrap;
+    flex-direction: row;
 }
 .field-row .field {
     flex: 1 1 160px;
@@ -641,7 +642,6 @@ main {
 .cat-row-actions {
     display: flex;
     gap: 8px;
-    flex-direction: column;
 }
 
 /* toast */
@@ -681,9 +681,6 @@ footer a {
 
 @media (max-width: 640px) {
     .detail-body {
-        padding: 22px;
-    }
-    .lightbox-inner {
         padding: 22px;
     }
     .header-inner {

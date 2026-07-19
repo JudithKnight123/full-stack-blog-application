@@ -114,7 +114,7 @@
             <label for="catColor">Colour</label>
             <input type="color" id="catColor" value="#6e8f5c">
           </div>
-          <div class="field" style="flex:2 1 200px;">
+          <div class="field">
             <label for="catSchedule">Schedule</label>
             <input type="text" id="catSchedule" placeholder="e.g. Thursdays · 8pm">
           </div>
@@ -130,7 +130,6 @@
         <p class="form-error" id="categoryEditError"></p>
         <div class="form-actions">
           <button type="button" class="btn btn-crimson btn-small" id="catDeleteBtn" style="display:none;" onclick="deleteCategory()">Delete category</button>
-          <span style="flex:1 1 auto;"></span>
           <button type="button" class="btn btn-small lightbox-cancel" id="catCancelBtn" data-target="categoryEditOverlay">Cancel</button>
           <button type="button" class="btn btn-teal btn-small" onclick="createCategory()">Save category</button>
         </div>
@@ -174,16 +173,19 @@
           <div class="field"><label for="filmRuntime">Runtime</label><input type="text" id="filmRuntime" placeholder="e.g. 1 hr 44 mins"></div>
         </div>
         <div class="field-row">
-          <div class="field"><label for="filmYear">Year</label><input type="text" id="filmYear" placeholder="e.g. 2024"></div>
+          <div class="field">
+            <label for="filmYear">Year</label>
+            <input type="text" id="filmYear" placeholder="e.g. 2024">
+          </div>
+        <div class="field">
+          <label for="filmHint">"You may like it if you like…" (optional)</label>
+          <input type="text" id="filmHint" placeholder="e.g. You may like it if you like: Flow">
+        </div>
         </div>
         <div class="field">
           <label for="filmImage">Poster image URL (optional — leave blank to use a generated poster)</label>
           <input type="url" id="filmImage" placeholder="https://...">
           <div class="img-preview" id="filmImagePreview"></div>
-        </div>
-        <div class="field">
-          <label for="filmHint">"You may like it if you like…" hint (optional, for secret screenings)</label>
-          <input type="text" id="filmHint" placeholder="e.g. You may like it if you like: Flow">
         </div>
         <div class="field">
           <label for="filmSynopsis">Synopsis</label>

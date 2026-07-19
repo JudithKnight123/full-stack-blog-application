@@ -151,7 +151,6 @@ function fetchCategories() {
         <div class="cat-row-info">
           <strong>${category.category_name}</strong>
           <span>${category.schedule || ""}${category.programmer ? " · " + category.programmer : ""}</span>
-          <p>${category.description || ""}</p>
         </div>
         <div class="cat-row-actions"></div>
         `;
@@ -201,13 +200,13 @@ function fetchCategories() {
         tabButton.className = "tab cat-tab";
         tabButton.textContent = category.category_name;
 
-// When this category tab is clicked, remember which category was picked
-// and refresh the film grid so it only shows films in that category
+        // When this category tab is clicked, remember which category was picked
+        // and refresh the film grid so it only shows films in that category
 
         tabButton.addEventListener("click", () => {
-  selectedCategory = category.id;
-  fetchPosts();
-});
+        selectedCategory = category.id;
+        fetchPosts();
+      });
 
         tabsContainer.insertBefore(tabButton, document.getElementById("manageCategoriesBtn"));
       });
