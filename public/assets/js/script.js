@@ -286,11 +286,16 @@ function fetchPosts() {
       filteredPosts.forEach((post) => {
       const div = document.createElement("div");
         div.innerHTML = `
-        <img src="${post.image}" alt="${post.title}" style="max-width:200px;">
-        <h3>${post.title}</h3>
-        <p>${post.synopsis}</p>
-        <small>By: ${post.postedBy} on ${new Date(post.createdOn).toLocaleString()}</small>
-        `;
+            <div class="poster-visual" style="background-image:url('${post.image}')">
+              <span class="date-tab">${post.date || ""}</span>
+                ${post.cert ? `<span class="cert-badge">${post.cert}</span>` : ""}
+            </div>
+            <div class="poster-meta">
+              <h3>${post.title}</h3>
+              <p class="meta-line">${[post.genre, post.runtime, post.year].filter(Boolean).join(" · ")}</p>
+            </div>
+            <div class="card-actions"></div>
+         `;
 
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
