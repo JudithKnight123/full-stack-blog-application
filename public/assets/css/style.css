@@ -425,16 +425,6 @@ main {
     font-size: 0.95rem;
     box-sizing: border-box;
 }
-.lightbox-box button[type="button"],
-.lightbox-box button {
-    padding: 9px 16px;
-    border-radius: 3px;
-    border: 1px solid transparent;
-    background: #2c7a76;
-    color: #fff;
-    font-size: 0.85rem;
-    cursor: pointer;
-}
 .lightbox-box .cat-row-actions button {
     background: none;
     border: none;
@@ -619,6 +609,7 @@ main {
     gap: 12px;
     padding: 12px 0;
     border-bottom: 1px solid var(--line);
+    align-items: center;
 }
 .cat-swatch {
     width: 22px;

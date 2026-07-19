@@ -287,7 +287,6 @@ function deleteCategory() {
 
 let editingFilmId = null;
 
-
 // Form Values moved to a function so they can be used for both creating and updating categories
 function getFilmFormValues() {
   return {
@@ -351,6 +350,7 @@ function fetchPosts() {
          `;
 
         const cardActions = div.querySelector(".card-actions");
+        div.querySelector(".poster-visual").addEventListener("click", () => openDetail(post));
         const editButton = document.createElement("button");
         
         editButton.textContent = "Edit";
@@ -458,7 +458,66 @@ function deleteFilm() {
       fetchPosts();
     });
 }
+// =================================
+// FILM DETAIL VIEW
+// =================================
 
+function openDetail(post) {
+  const cat = allCategories.find((c) => c.id === post.categoryId);
+  const catColor = cat ? cat.color : "#6e8f5c";
+  const textColor = isLightColor(catColor) ? "#22251e" : "#f7f4e9";
+
+  // Decide what goes inside the poster box: real image, or generated fallback
+  let posterContent;
+  if (post.image) {
+    posterContent = `<img src="${post.image}" alt="${post.title}" class="poster-image" />`;
+  } else {
+    posterContent = `
+      <div class="poster-generated" style="background:${catColor}; color:${textColor};">
+        <span class="poster-eyebrow">${cat ? cat.category_name : ""}</span>
+        <span class="poster-title">${post.title}</span>
+      </div>
+    `;
+  }
+
+  // Decide the extra meta details (genre, runtime, year), skipping any that are blank
+  const metaExtras = [post.genre, post.runtime, post.year].filter(Boolean).join(" · ");
+
+  // Build the final detail view using the pieces above
+  document.getElementById("detailContent").innerHTML = `
+    <div class="detail-visual">
+      <div class="poster-visual">${posterContent}</div>
+    </div>
+    <div class="detail-body">
+      <span class="cat-chip" style="background:${catColor}; color:${textColor};">${cat ? cat.category_name : ""}</span>
+      <h2>${post.title}</h2>
+      <div class="detail-meta">
+        <span>${shortDate(post.date)}</span>
+        ${post.cert ? `<span>Cert ${post.cert}</span>` : ""}
+        ${metaExtras}
+      </div>
+      ${post.hint ? `<p class="detail-hint">${post.hint}</p>` : ""}
+      <p>${post.synopsis}</p>
+      ${cat && cat.programmer ? `<p class="detail-programmer">Programmed by ${cat.programmer}</p>` : ""}
+      <div class="detail-actions">
+        <button class="btn btn-teal btn-small" id="detailEditBtn">✎ Edit this film</button>
+        <button class="btn btn-crimson btn-small" id="detailDeleteBtn">🗑 Delete</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("detailEditBtn").addEventListener("click", () => {
+    document.getElementById("detailOverlay").classList.remove("is-open");
+    openFilmEditor(post);
+  });
+  document.getElementById("detailDeleteBtn").addEventListener("click", () => {
+    document.getElementById("detailOverlay").classList.remove("is-open");
+    editingFilmId = post.id;
+    deleteFilm();
+  });
+
+  document.getElementById("detailOverlay").classList.add("is-open");
+}
 fetchCategories();
 fetchPosts();
 
