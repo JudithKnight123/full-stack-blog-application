@@ -289,10 +289,12 @@ function fetchPosts() {
       postsContainer.innerHTML = "";
       const filteredPosts = selectedCategory ? posts.filter((post) => post.categoryId === selectedCategory) : posts;
       filteredPosts.forEach((post) => {
+        console.log(post.title, post.image);
       const div = document.createElement("div");
       div.className = "poster-card";
         div.innerHTML = `
-            <div class="poster-visual" style="background-image:url('${post.image}')">
+            <div class="poster-visual">
+            <img src="${post.image}" alt="${post.title}" style="max-width:310px;"/>
               <span class="date-tab">${post.date || ""}</span>
                 ${post.cert ? `<span class="cert-badge">${post.cert}</span>` : ""}
             </div>
@@ -312,7 +314,7 @@ function fetchPosts() {
           editingFilmId = post.id;
           document.getElementById("filmTitle").value = post.title;
           document.getElementById("filmCategory").value = post.categoryId;
-          document.getElementById("filmDate").value = post.date;
+          document.getElementById("filmDate").value = post.date ? post.date.slice(0, 10) : "";
           document.getElementById("filmCert").value = post.cert;
           document.getElementById("filmGenre").value = post.genre;
           document.getElementById("filmRuntime").value = post.runtime;
