@@ -1,6 +1,6 @@
-// =================================
+// -------------------------------
 // GLOBAL VARIABLES
-// =================================
+// -------------------------------
 
 let editingCategoryId = null;
 let selectedCategory = null;
@@ -26,9 +26,10 @@ document.querySelectorAll(".lightbox-close, .lightbox-cancel").forEach(btn => {
     document.getElementById(btn.dataset.target).classList.remove("is-open");
   });
 });
-// =================================
+
+// -------------------------------
 // OPTIONAL UTILITY FUNCTIONS
-// =================================
+// -------------------------------
 
 // Checks if a hex color is light or dark, returns true for light colors
 function isLightColor(hex) {
@@ -45,7 +46,7 @@ function shortDate(iso) {
   if (isNaN(d)) return iso;
   return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 }
-//------------for edit film button
+// for edit film button
 function openFilmEditor(post) {
   editingFilmId = post.id;
   document.getElementById("filmTitle").value = post.title;
@@ -62,20 +63,21 @@ function openFilmEditor(post) {
   document.getElementById("filmOverlay").classList.add("is-open");
   document.getElementById("filmDeleteBtn").classList.remove("hidden");
 }
-//------------set function for active tab
+// set function for active tab
 function setActiveTab(button) {
   document.querySelectorAll("#tabs .tab").forEach((tab) => tab.classList.remove("active"));
   button.classList.add("active");
 }
-//------------simplyfy function to show all films
+// simplify function to show all films
 function showAllFilms(button) {
   selectedCategory = null;
   setActiveTab(button);
   fetchPosts();
 }
-// =================================
+
+// -------------------------------
 // AUTHENTICATION
-// =================================
+// -------------------------------
 
 function register(e) {
   e.preventDefault();
@@ -148,9 +150,9 @@ function logout() {
   });
 }
 
-// =================================
+// -------------------------------
 // PULLS CATEGORIES FROM THE BACKEND
-// =================================
+// -------------------------------
 
 // Form Values moved to a function so they can be used for both creating and updating categories
 function getCategoryFormValues() {
@@ -314,9 +316,9 @@ function deleteCategory() {
     });
 }
 
-// =================================
+// -------------------------------
 // PULLS FILMS FROM THE BACKEND
-// =================================
+// -------------------------------
 
 // Form Values moved to a function so they can be used for both creating and updating categories
 function getFilmFormValues() {
@@ -459,7 +461,7 @@ function updatePost() {
     })
     .catch((error) => {
       console.error(error);
-      alert("Something went wrong updating the film — check the console.");
+      alert("Something went wrong");
     });
 }
 
@@ -482,9 +484,10 @@ function deleteFilm() {
       fetchPosts();
     });
 }
-// =================================
+
+// -------------------------------
 // FILM DETAIL VIEW
-// =================================
+// -------------------------------
 
 function openDetail(post) {
   const cat = allCategories.find((c) => c.id === post.categoryId);
