@@ -320,7 +320,7 @@ function deleteCategory() {
 // PULLS FILMS FROM THE BACKEND
 // -------------------------------
 
-// Form Values moved to a function so they can be used for both creating and updating categories
+// Form Values moved to a function so they can be used for both creating and updating films
 function getFilmFormValues() {
   return {
     title: document.getElementById("filmTitle").value,
