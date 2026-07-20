@@ -1,3 +1,11 @@
+// =================================
+// GLOBAL VARIABLES
+// =================================
+
+let editingCategoryId = null;
+let selectedCategory = null;
+let allCategories = [];
+let editingFilmId = null;
 let token = localStorage.getItem("authToken");
 
 if (token) {
@@ -143,10 +151,6 @@ function logout() {
 // =================================
 // PULLS CATEGORIES FROM THE BACKEND
 // =================================
-
-let editingCategoryId = null;
-let selectedCategory = null;
-let allCategories = [];
 
 // Form Values moved to a function so they can be used for both creating and updating categories
 function getCategoryFormValues() {
@@ -313,8 +317,6 @@ function deleteCategory() {
 // =================================
 // PULLS FILMS FROM THE BACKEND
 // =================================
-
-let editingFilmId = null;
 
 // Form Values moved to a function so they can be used for both creating and updating categories
 function getFilmFormValues() {
@@ -491,6 +493,7 @@ function openDetail(post) {
 
   // Decide what goes inside the poster box: real image, or generated fallback
   let posterContent;
+
   if (post.image) {
     posterContent = `<img src="${post.image}" alt="${post.title}" class="poster-image" />`;
   } else {
