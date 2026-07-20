@@ -54,6 +54,17 @@ function openFilmEditor(post) {
   document.getElementById("filmOverlay").classList.add("is-open");
   document.getElementById("filmDeleteBtn").classList.remove("hidden");
 }
+//------------set function for active tab
+function setActiveTab(button) {
+  document.querySelectorAll("#tabs .tab").forEach((tab) => tab.classList.remove("active"));
+  button.classList.add("active");
+}
+//------------simplyfy function to show all films
+function showAllFilms(button) {
+  selectedCategory = null;
+  setActiveTab(button);
+  fetchPosts();
+}
 // =================================
 // AUTHENTICATION
 // =================================
@@ -222,6 +233,7 @@ function fetchCategories() {
 
         tabButton.addEventListener("click", () => {
         selectedCategory = category.id;
+        setActiveTab(tabButton);
         fetchPosts();
       });
 
