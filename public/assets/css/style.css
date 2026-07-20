@@ -361,6 +361,7 @@ main {
     font-family: var(--font-mono);
     font-size: 0.74rem;
     margin: 0;
+    color: var(--ink-soft);
 }
 .card-actions {
     display: flex;
