@@ -653,30 +653,6 @@ main {
     gap: 8px;
 }
 
-/* toast */
-#toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translate(-50%, 20px);
-    background: var(--ink);
-    color: var(--paper);
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    padding: 10px 18px;
-    border-radius: 4px;
-    opacity: 0;
-    pointer-events: none;
-    transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
-    z-index: 100;
-}
-#toast.show {
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
-
 footer {
     text-align: center;
     padding: 30px 24px 40px;
