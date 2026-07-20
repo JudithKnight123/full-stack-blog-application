@@ -56,6 +56,7 @@ app.delete("/:id", async (req, res) => {
     const post = await Post.destroy({ where: { id: req.params.id } });
     res.json(post);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Error deleting post" });
   }
 });

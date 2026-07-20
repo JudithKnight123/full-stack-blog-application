@@ -434,11 +434,18 @@ function updatePost() {
     },
     body: JSON.stringify({ title, categoryId, date, cert, genre, runtime, year, image, hint, synopsis, postedBy: "User" }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) throw new Error("Update failed");
+      return res.json();
+    })
     .then(() => {
       alert("Post updated successfully");
       document.getElementById("filmOverlay").classList.remove("is-open");
       fetchPosts();
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("Something went wrong updating the film — check the console.");
     });
 }
 
