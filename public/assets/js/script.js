@@ -358,7 +358,7 @@ function fetchPosts() {
                 <span class="date-tab">${shortDate(post.date)}</span>
                 ${certBadge}
               </div>
-              <div class="poster-meta">
+              <div class="poster-meta" style="background:${catColor}; color:${textColor};">
                 <h3>${post.title}</h3>
                 <p class="meta-line">${[post.genre, post.runtime, post.year].filter(Boolean).join(" · ")}</p>
               </div>
