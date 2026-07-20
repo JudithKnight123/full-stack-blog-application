@@ -407,8 +407,9 @@ main {
     position: absolute;
     top: 14px;
     right: 14px;
-    background: #22251e;
-    color: #f2efe3;
+    z-index: 5;
+    background: #000000;
+    color: #FFFFFF;
     border: none;
     width: 34px;
     height: 34px;
