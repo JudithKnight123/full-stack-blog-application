@@ -400,7 +400,9 @@ main {
 .lightbox-box-small {
     max-width: 440px;
 }
-
+#detailOverlay .lightbox-box {
+    padding: 0;
+}
 .lightbox-close {
     position: absolute;
     top: 14px;
